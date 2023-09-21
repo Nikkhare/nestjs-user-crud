@@ -4,6 +4,8 @@ import { User } from './user/user.entity';
 import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CustomerCategoryModule } from './customer_category/customer_category.module';
+import { CustomerCategory } from './customer_category/customer_category.entity';
 
 @Module({
   imports: [
@@ -17,12 +19,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-      entities: [User],
+      entities: [User, CustomerCategory],
       synchronize: true,
     }),
     inject: [ConfigService],
   }),
-  TypeOrmModule.forFeature([User])
+  TypeOrmModule.forFeature([User]),
+  CustomerCategoryModule
   ],
   providers: [UserService],
   controllers: [UserController],

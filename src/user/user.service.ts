@@ -11,15 +11,18 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    const users: User[] = await this.userRepository.find();
+    return users;
   }
 
   async findOne(id: number): Promise<User> {
-    return this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({where: { id }});
+    return user;
   }
 
   async create(user: User): Promise<User> {
-    return this.userRepository.save(user);
+    const userInfo = await this.userRepository.save(user)
+    return userInfo;
   }
 
   async update(id: number, user: User): Promise<User> {
