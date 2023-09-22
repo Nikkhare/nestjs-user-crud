@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
+import { Address } from './address/address.entity';
 import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CustomerCategoryModule } from './customer_category/customer_category.module';
 import { CustomerCategory } from './customer_category/customer_category.entity';
+// import { BookModule } from './book/book.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -19,13 +22,15 @@ import { CustomerCategory } from './customer_category/customer_category.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-      entities: [User, CustomerCategory],
+      entities: [User, CustomerCategory, Address],
       synchronize: true,
     }),
     inject: [ConfigService],
   }),
   TypeOrmModule.forFeature([User]),
-  CustomerCategoryModule
+  CustomerCategoryModule,
+  // BookModule,
+  AddressModule
   ],
   providers: [UserService],
   controllers: [UserController],
